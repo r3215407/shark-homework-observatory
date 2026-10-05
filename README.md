@@ -33,6 +33,8 @@
 
 仓库中的 `vercel.json` 会自动配置静态资源缓存和基础安全响应头。部署后首次打开会创建新的 `localStorage`；电脑本地地址中的历史数据不会自动迁移到 Vercel 域名。
 
+如果项目之前选择过 Next.js，进入 Vercel 的 `Settings → Build and Deployment`，把 Framework Preset 改为 `Other`，并删除 Build Command 中的 `npm run vercel-build`。然后从最新 Git 提交重新部署，不要只重试旧的失败构建。
+
 ## 数据
 
 - 存储键：`shark-observatory-v1`
