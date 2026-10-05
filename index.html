@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#147b73">
+  <meta name="description" content="记录每天语文、数学、英语作业等级的本地 H5 工具">
+  <title>鲨鱼观察站</title>
+  <link rel="icon" href="assets/shark-guide.png" type="image/png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="ocean-header">
+      <div class="brand-block">
+        <p class="brand-name">鲨鱼观察站</p>
+        <h1 id="page-title">今天记录</h1>
+        <p id="page-subtitle" class="header-subtitle"></p>
+      </div>
+      <img class="guide-shark" src="assets/shark-guide.png" alt="">
+      <button class="icon-button settings-button" id="settings-button" type="button" aria-label="打开设置" title="设置">
+        <i data-lucide="settings" aria-hidden="true"></i>
+      </button>
+    </header>
+
+    <main>
+      <section class="view is-active" id="today-view" data-view="today" aria-labelledby="today-heading">
+        <div class="section-heading-row">
+          <div>
+            <h2 id="today-heading">今天记录</h2>
+            <p id="today-date" class="muted"></p>
+          </div>
+          <p id="today-progress" class="progress-copy"></p>
+        </div>
+        <div id="subject-list" class="subject-list"></div>
+        <div class="save-dock">
+          <p id="today-reward-hint" class="reward-hint"></p>
+          <button class="primary-button" id="save-today" type="button" disabled>
+            <i data-lucide="save" aria-hidden="true"></i>
+            <span>保存今天</span>
+          </button>
+        </div>
+      </section>
+
+      <section class="view" id="history-view" data-view="history" aria-labelledby="history-heading" hidden>
+        <div class="section-heading-row">
+          <div>
+            <h2 id="history-heading">历史记录</h2>
+            <p class="muted">点选日期补录或修改</p>
+          </div>
+        </div>
+        <div class="month-switcher" aria-label="切换月份">
+          <button class="icon-button" id="previous-month" type="button" aria-label="上个月" title="上个月"><i data-lucide="chevron-left" aria-hidden="true"></i></button>
+          <strong id="history-month"></strong>
+          <button class="icon-button" id="next-month" type="button" aria-label="下个月" title="下个月"><i data-lucide="chevron-right" aria-hidden="true"></i></button>
+        </div>
+        <div id="history-calendar" class="history-calendar"></div>
+      </section>
+
+      <section class="view" id="analysis-view" data-view="analysis" aria-labelledby="analysis-heading" hidden>
+        <div class="section-heading-row">
+          <div>
+            <h2 id="analysis-heading">学习分析</h2>
+            <p class="muted">只统计已经记录的作业</p>
+          </div>
+        </div>
+        <div class="segmented-control" id="range-control" aria-label="分析时间范围">
+          <button type="button" data-range="7" class="is-selected">7天</button>
+          <button type="button" data-range="30">30天</button>
+          <button type="button" data-range="term">本学期</button>
+        </div>
+        <div id="analysis-content"></div>
+      </section>
+
+      <section class="view collection-view" id="collection-view" data-view="collection" aria-labelledby="collection-heading" hidden>
+        <div class="section-heading-row">
+          <div>
+            <h2 id="collection-heading">海洋图鉴</h2>
+            <p class="muted">把遇见的海洋朋友收进这里</p>
+          </div>
+        </div>
+        <div id="collection-content"></div>
+      </section>
+    </main>
+
+    <nav class="bottom-nav" aria-label="主要页面">
+      <button type="button" data-target="today" class="is-selected">
+        <i data-lucide="house" aria-hidden="true"></i><span>今日</span>
+      </button>
+      <button type="button" data-target="history">
+        <i data-lucide="notebook-tabs" aria-hidden="true"></i><span>记录</span>
+      </button>
+      <button type="button" data-target="analysis">
+        <i data-lucide="chart-no-axes-combined" aria-hidden="true"></i><span>分析</span>
+      </button>
+      <button type="button" data-target="collection">
+        <span class="nav-icon-wrap"><i data-lucide="book-open" aria-hidden="true"></i><b id="pending-badge" hidden></b></span><span>图鉴</span>
+      </button>
+    </nav>
+  </div>
+
+  <dialog id="sheet" class="bottom-sheet">
+    <div class="sheet-handle" aria-hidden="true"></div>
+    <div id="sheet-content"></div>
+  </dialog>
+  <dialog id="discovery-dialog" class="discovery-dialog">
+    <div id="discovery-content"></div>
+  </dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="vendor/lucide.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

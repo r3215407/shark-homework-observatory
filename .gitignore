@@ -1,0 +1,12 @@
+# Generated design previews and browser-test artifacts
+.impeccable/
+output/
+tmp/
+
+# Local OS metadata
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Local logs
+*.log
