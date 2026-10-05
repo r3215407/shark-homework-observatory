@@ -19,6 +19,20 @@
 
 发送到手机时需要保留整个目录结构，至少包含 `index.html`、`styles.css`、`app.js`、`assets/` 和 `vendor/`。
 
+## 部署到 Vercel
+
+本项目是纯静态 H5，不需要 Next.js、Node.js 依赖或构建命令。
+
+在 Vercel 导入 Git 仓库时使用以下设置：
+
+- Framework Preset：`Other`
+- Build Command：留空
+- Output Directory：留空
+- Install Command：留空
+- Root Directory：仓库根目录
+
+仓库中的 `vercel.json` 会自动配置静态资源缓存和基础安全响应头。部署后首次打开会创建新的 `localStorage`；电脑本地地址中的历史数据不会自动迁移到 Vercel 域名。
+
 ## 数据
 
 - 存储键：`shark-observatory-v1`

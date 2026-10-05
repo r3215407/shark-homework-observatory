@@ -10,3 +10,6 @@ Desktop.ini
 
 # Local logs
 *.log
+
+# Vercel project metadata
+.vercel/
