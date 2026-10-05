@@ -214,6 +214,7 @@
 
   function openRecordEditor(key) {
     const sheet = $("#sheet"), draft = { ...(state.records[key] || {}) };
+    sheet.dataset.sheetMode = "record";
     $("#sheet-content").innerHTML = `<div class="sheet-title-row"><h2>编辑当天记录</h2><button class="icon-button" type="button" data-close-sheet aria-label="关闭"><i data-lucide="x"></i></button></div><p class="sheet-copy">${formatLongDate(parseDateKey(key))}，三科都确认后才会计算发现次数。</p><div class="form-field"><label for="record-date">日期</label><input id="record-date" type="date" value="${key}" max="${localDateKey()}"></div><div id="editor-grades">${SUBJECTS.map((s) => `<div class="editor-subject" data-editor-subject="${s.key}"><div class="editor-subject-head"><strong>${s.name}</strong><button class="text-button" type="button" data-clear-subject="${s.key}">改为未记录</button></div>${gradePickerHtml(s.key, draft[s.key] || "", "editor")}</div>`).join("")}</div><div class="sheet-actions"><button class="danger-button" type="button" data-delete-day ${state.records[key] ? "" : "disabled"}>删除当天</button><button class="primary-button" type="button" data-save-record><i data-lucide="save"></i><span>保存记录</span></button></div>`;
     sheet._recordDraft = draft; sheet._recordDate = key; if (!sheet.open) sheet.showModal(); refreshIcons();
   }
@@ -257,16 +258,19 @@
   function openCardDetail(id) {
     const card = CARD_MAP[id], owned = entry(id); if (!card || !owned) return;
     const companions = SUBJECTS.filter((s) => state.settings.companions[s.key] === id).map((s) => s.name);
+    $("#sheet").dataset.sheetMode = "card";
     $("#sheet-content").innerHTML = `<div class="sheet-title-row"><h2>${card.name}</h2><button class="icon-button" type="button" data-close-sheet><i data-lucide="x"></i></button></div><div class="detail-hero is-${card.rarity}"><span class="detail-rarity">${card.rarity === "rare" ? `稀有 R · ${card.category}` : `普通 · ${card.category}`}</span>${speciesArtHtml(card)}</div><p class="species-description">${card.description}</p><section class="fact-block"><h3>你知道吗</h3><p>${card.fact}</p>${owned.count >= 2 ? `<p class="unlocked-fact">伙伴升级解锁了新的观察记录。</p>` : ""}</section><dl class="species-meta"><div><dt>${card.category === "史前生物" ? "生存年代" : "物种状态"}</dt><dd>${card.era}</dd></div><div><dt>首次发现</dt><dd>${formatShortDate(owned.firstFound)}</dd></div><div><dt>当前数量</dt><dd>×${owned.count}${owned.count === 3 ? " MAX" : ""}</dd></div></dl>${companions.length ? `<p class="companion-current"><i data-lucide="heart"></i>正在陪伴：${companions.join("、")}</p>` : ""}<button class="primary-button" type="button" data-choose-companion="${card.id}"><i data-lucide="smile"></i><span>设为科目伙伴</span></button>`;
     if (!$("#sheet").open) $("#sheet").showModal(); refreshIcons();
   }
   function openCompanionPicker(id) {
     const card = CARD_MAP[id];
+    $("#sheet").dataset.sheetMode = "companion";
     $("#sheet-content").innerHTML = `<div class="sheet-title-row"><h2>选择科目伙伴</h2><button class="icon-button" type="button" data-close-sheet><i data-lucide="x"></i></button></div><p class="sheet-copy">让${card.name}陪伴哪个科目？同一位伙伴可以选择多科。</p><div class="companion-picker">${SUBJECTS.map((s) => `<button type="button" data-set-companion="${s.key}" data-card-id="${id}" class="${state.settings.companions[s.key] === id ? "is-selected" : ""}">${subjectAvatarHtml(s)}<strong>${s.name}</strong><span>${state.settings.companions[s.key] === id ? "正在陪伴" : "设为伙伴"}</span></button>`).join("")}</div><button class="secondary-button reset-companions" type="button" data-reset-companions><i data-lucide="rotate-ccw"></i><span>恢复默认伙伴</span></button>`;
     if (!$("#sheet").open) $("#sheet").showModal();
     refreshIcons();
   }
   function openCompanionOverview() {
+    $("#sheet").dataset.sheetMode = "companion";
     $("#sheet-content").innerHTML = `<div class="sheet-title-row"><h2>科目伙伴</h2><button class="icon-button" type="button" data-close-sheet><i data-lucide="x"></i></button></div><p class="sheet-copy">从图鉴卡片详情中选择喜欢的伙伴。</p><div class="companion-overview">${SUBJECTS.map((s) => { const card = CARD_MAP[state.settings.companions[s.key]]; return `<div>${subjectAvatarHtml(s)}<span><strong>${s.name}</strong><small>${card ? card.name : "默认伙伴"}</small></span></div>`; }).join("")}</div><div class="settings-actions"><button class="primary-button" type="button" data-go-collection><i data-lucide="book-open"></i><span>去图鉴更换</span></button><button class="secondary-button" type="button" data-reset-companions><i data-lucide="rotate-ccw"></i><span>恢复默认伙伴</span></button></div>`;
     refreshIcons();
   }
@@ -301,10 +305,12 @@
   }
 
   function openRewardSheet(added, key) {
+    $("#sheet").dataset.sheetMode = "reward";
     $("#sheet-content").innerHTML = `<div class="reward-sheet"><div class="reward-shells">${Array.from({ length: added }, () => "<i></i>").join("")}</div><h2>${key === localDateKey() ? "今天记录完成" : "补录完成"}</h2><p>获得 ${added} 次海洋发现</p><span>${added === 1 ? "完成记录获得一次发现" : "A 或 A+ 带来了额外发现"}</span><div class="settings-actions"><button class="primary-button" type="button" data-discover-now><i data-lucide="sparkles"></i><span>现在去发现</span></button><button class="secondary-button" type="button" data-close-sheet>稍后再看</button></div></div>`;
     if (!$("#sheet").open) $("#sheet").showModal(); refreshIcons();
   }
   function openSettings() {
+    $("#sheet").dataset.sheetMode = "settings";
     $("#sheet-content").innerHTML = `<div class="sheet-title-row"><h2>设置</h2><button class="icon-button" type="button" data-close-sheet><i data-lucide="x"></i></button></div><p class="sheet-copy">成绩、图鉴和科目伙伴只保存在当前浏览器中。</p><div class="form-field"><label for="child-name">孩子昵称</label><input id="child-name" maxlength="12" value="${escapeHtml(state.settings.childName)}"></div><button class="settings-row" type="button" data-open-companions><span><strong>科目伙伴</strong><small>查看和恢复三个科目的头像</small></span><i data-lucide="chevron-right"></i></button><div class="settings-actions"><button class="primary-button" type="button" data-save-settings><i data-lucide="save"></i><span>保存设置</span></button><button class="danger-button" type="button" data-clear-all>清空全部数据</button></div>`;
     if (!$("#sheet").open) $("#sheet").showModal(); refreshIcons();
   }
