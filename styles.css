@@ -467,10 +467,13 @@ main { padding: 4px 18px calc(106px + env(safe-area-inset-bottom)); }
 .collection-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px; }
 .collection-card { position: relative; display: block; min-width: 0; aspect-ratio: 3 / 4; overflow: hidden; padding: 0; border: 1px solid #cddfdb; border-radius: 8px; background: #dff3f2; text-align: left; cursor: pointer; }
 .collection-card.is-rare { border: 3px double #d4b34e; background: #153f58; }
-.collection-card.is-locked { display: grid; place-items: center; align-content: center; gap: 12px; color: #557e88; background: #dff2f4; cursor: default; }
-.collection-card.is-locked strong { font-size: 13px; }
+.collection-card.is-locked { color: #fff; background: #315e65; cursor: default; }
+.collection-card.is-locked > .species-art { inset: -8px; width: calc(100% + 16px); height: calc(100% + 16px); transform: scale(1.06); filter: blur(6px) grayscale(.58) saturate(.72) brightness(.78); }
+.locked-card-copy { position: absolute; z-index: 2; inset: 0; display: grid; place-items: center; align-content: center; gap: 12px; background: rgba(17, 58, 64, .28); }
+.collection-card.is-locked strong { font-size: 13px; text-shadow: 0 2px 8px rgba(5, 31, 35, .55); }
 .card-back-pattern { display: grid; width: 58px; height: 58px; place-items: center; border: 2px solid rgba(20,123,115,.3); border-radius: 50%; }
 .card-back-pattern svg { width: 29px; }
+.collection-card.is-locked .card-back-pattern { border-color: rgba(255,255,255,.68); background: rgba(12,55,61,.28); }
 .species-art {
   display: block;
   width: 100%;

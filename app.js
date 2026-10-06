@@ -251,7 +251,7 @@
   }
   function collectionCardHtml(card) {
     const owned = entry(card.id);
-    if (!owned) return `<div class="collection-card is-locked" aria-label="尚未发现"><div class="card-back-pattern"><i data-lucide="waves"></i></div><strong>尚未发现</strong></div>`;
+    if (!owned) return `<div class="collection-card is-locked" aria-label="神秘海洋生物，尚未发现">${speciesArtHtml(card)}<span class="locked-card-copy"><span class="card-back-pattern"><i data-lucide="waves"></i></span><strong>尚未发现</strong></span></div>`;
     const companion = Object.values(state.settings.companions).includes(card.id);
     return `<button class="collection-card is-${card.rarity}" type="button" data-card-detail="${card.id}"><span class="card-rarity">${card.rarity === "rare" ? "稀有 R" : "普通"}</span>${card.rarity === "rare" ? `<span class="tooth-badge"><i data-lucide="shield"></i></span>` : ""}${speciesArtHtml(card)}<span class="collection-card-foot"><strong>${card.name}</strong><small>${owned.count > 1 ? `×${owned.count}${owned.count === 3 ? " MAX" : ""}` : card.category}</small></span>${companion ? `<span class="companion-mark"><i data-lucide="heart"></i></span>` : ""}</button>`;
   }
