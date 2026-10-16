@@ -67,6 +67,56 @@
     ["dunkleosteus", "邓氏鱼", "史前生物", "生活在泥盆纪，是拥有坚硬头甲的大型盾皮鱼。", "用锋利的骨板边缘切割食物。", "约3.8亿至3.6亿年前"],
     ["megalodon", "巨齿鲨", "史前生物", "是已经灭绝的大型鲨类，曾生活在温暖海域。", "科学家主要通过巨大的化石牙齿认识它。", "约2300万至360万年前"]
   ];
+  const SPECIES_DETAILS = {
+    "clownfish": ["约 11 厘米", "1–15 米", "印度洋与太平洋的热带珊瑚礁", ["小丑鱼会和海葵互相帮助：海葵提供保护，小丑鱼帮忙清理和带来食物。", "一个群体里体型最大的通常是雌鱼，其他成员会按大小排队。"]],
+    "blue-tang": ["约 30 厘米", "2–40 米", "印度洋与太平洋的珊瑚礁", ["幼鱼多吃浮游生物，长大后常在礁石表面啃食海藻。", "紧张时它的蓝色体色可能暂时变得更深或更浅。"]],
+    "butterflyfish": ["约 12–22 厘米", "1–30 米", "全球热带与亚热带珊瑚礁", ["细长的嘴能伸进珊瑚缝隙取食。", "眼睛附近的深色条纹有助于隐藏真正的眼睛。"]],
+    "damselfish": ["约 7–15 厘米", "1–20 米", "全球温暖海域的珊瑚礁", ["有些雀鲷会赶走闯入自己海藻园的动物。", "雄鱼会守护附着在礁石上的鱼卵，并用鱼鳍为它们送去新鲜水流。"]],
+    "lionfish": ["约 30–38 厘米", "1–175 米", "印度洋与太平洋，部分种类已进入大西洋", ["宽大的胸鳍能把小鱼围向角落。", "背鳍上的毒刺用于防御，不是用来捕猎。"]],
+    "pufferfish": ["约 10–60 厘米", "0–100 米", "全球热带与亚热带近岸海域", ["鼓起身体是为了让捕食者难以下口。", "有些河豚体内含有强毒素，不能随意触碰或食用。"]],
+    "sunfish": ["最大约 3.3 米", "0–800 米", "全球温带与热带外海", ["它会从深水上浮到海面，让太阳帮助身体回暖。", "雌性翻车鱼一次可以产生数量极多的卵。"]],
+    "garden-eel": ["约 40–70 厘米", "5–45 米", "印度洋与太平洋的沙质海床", ["一整片花园鳗看起来像海底随水摇摆的小草。", "它们几乎不会完全离开自己的洞穴。"]],
+    "seahorse": ["约 2–35 厘米", "0–50 米", "全球温带与热带浅海", ["海马直立游泳，主要靠背鳍快速摆动前进。", "它的两只眼睛可以分别转向不同方向。"]],
+    "octopus": ["腕展约 1 米", "0–200 米", "全球沿岸岩礁与海底洞穴", ["普通章鱼能挤过比身体小很多的缝隙，因为它没有硬骨骼。", "每条腕足都拥有大量神经细胞，可以灵活地独立探索。"]],
+    "cuttlefish": ["约 15–50 厘米", "0–200 米", "欧洲、非洲、亚洲与澳洲近海", ["皮肤中的色素细胞能在很短时间内改变颜色。", "体内的海螵蛸可以帮助它调节浮力。"]],
+    "jellyfish": ["伞径约 25–40 厘米", "0–200 米", "全球温带与热带沿岸海域", ["海月水母会用伞状身体有节奏地收缩前进。", "身体大部分由水组成，半透明的四个环是它的生殖腺。"]],
+    "green-turtle": ["约 1–1.2 米", "0–300 米", "全球热带与亚热带海域", ["绿海龟的名字来自体内脂肪的颜色，并不是龟壳的颜色。", "它能在海里迁徙很远，再回到出生附近的海滩。"]],
+    "hermit-crab": ["约 2–10 厘米", "0–100 米", "全球沿岸潮池、沙滩与浅海", ["寄居蟹的腹部柔软而卷曲，正好能伸进螺壳。", "有时几只寄居蟹会排队交换大小更合适的贝壳。"]],
+    "manta-ray": ["翼展最大约 7 米", "0–1,000 米", "全球热带与亚热带外海", ["蝠鲼会在清洁站停留，让小鱼清理皮肤。", "它的大脑在鱼类中相对很大，也会表现出好奇行为。"]],
+    "eagle-ray": ["翼展约 3 米", "0–80 米", "全球温暖海域的海湾与珊瑚礁", ["斑点鹰鳐有时会跃出水面。", "头部下方的吻鳍可以帮助它翻找埋在沙中的食物。"]],
+    "scallop": ["壳宽约 10–15 厘米", "0–100 米", "全球沿岸沙质与砾石海床", ["扇贝能连续开合贝壳，喷出水流快速逃走。", "壳边一圈蓝色小眼睛能感受光线与移动。"]],
+    "giant-clam": ["最大约 1.2 米", "1–20 米", "印度洋与太平洋的珊瑚礁", ["砗磲会朝向阳光，让外套膜中的共生藻更好地工作。", "成年砗磲会固定在礁石上，不会主动追逐动物。"]],
+    "nautilus": ["壳径约 20 厘米", "100–700 米", "印度洋与西太平洋深礁坡", ["鹦鹉螺拥有许多短触手，数量可超过八十条。", "白天多停留在深处，夜间会游向较浅的海域觅食。"]],
+    "sea-hare": ["约 20–40 厘米", "0–20 米", "全球温暖海域的海草床与岩礁", ["像兔耳的触角能帮助它感受水中的气味。", "它主要啃食海藻，体色常与吃下的海藻有关。"]],
+    "cowrie": ["壳长约 2–10 厘米", "0–50 米", "全球热带与亚热带珊瑚礁", ["宝螺活着时，外套膜常会覆盖在贝壳外面。", "外套膜收回后，会露出光滑而有花纹的硬壳。"]],
+    "sunflower-star": ["直径最大约 1 米", "0–435 米", "东北太平洋沿岸", ["太阳海星可拥有 16–24 条腕足。", "失去一条腕足后，它有能力慢慢再生。"]],
+    "blue-sea-star": ["约 20–30 厘米", "0–60 米", "印度洋与西太平洋珊瑚礁", ["蓝色来自表皮中的天然色素与微小结构。", "它用腕足下方数百只细小管足移动和取食。"]],
+    "sea-urchin": ["约 5–15 厘米", "0–200 米", "全球岩礁、海草床与珊瑚礁", ["海胆的棘刺可以转动，帮助防御和移动。", "它的五颗牙会持续生长，以补偿啃食岩石造成的磨损。"]],
+    "sea-cucumber": ["约 10–40 厘米", "0–8,000 米", "从浅海到深海的全球海床", ["海参吞下沉积物后，会把清理过的沙粒排回海底。", "受到威胁时，有些种类会排出黏丝来分散对方注意力。"]],
+    "cleaner-shrimp": ["约 5–7 厘米", "1–40 米", "印度洋与太平洋珊瑚礁", ["清洁虾会挥动白色触须，像在打出“可以清洁”的信号。", "大型鱼会张开嘴，让它安全地清理口腔。"]],
+    "horseshoe-crab": ["约 30–60 厘米", "0–40 米", "亚洲与北美洲沿岸浅海", ["鲎不是螃蟹，和蜘蛛、蝎子的亲缘关系更近。", "它有多组眼睛，其中一些只能感受光暗变化。"]],
+    "leafy-seadragon": ["约 20–35 厘米", "3–50 米", "澳大利亚南部温带海域", ["叶片状附肢不会推动身体，真正游泳靠的是透明小鳍。", "和海马一样，雄性叶海龙负责携带鱼卵。"]],
+    "ribbon-eel": ["约 1 米", "1–67 米", "印度洋与太平洋珊瑚礁", ["幼年个体通常是黑色，长大后会变成亮蓝色或黄色。", "它常只把头伸出洞外，用张合嘴巴让水流过鳃。"]],
+    "sea-angel": ["约 1–5 厘米", "0–500 米", "北冰洋与寒冷海域", ["看似翅膀的结构其实由足演化而来。", "虽然外形轻盈，它却会捕食带壳的海蝶。"]],
+    "coconut-crab": ["腿展最大约 1 米", "海岸陆地", "印度洋与太平洋热带岛屿", ["椰子蟹成年后主要用特殊的鳃状器官呼吸空气。", "它有很强的螯，可以爬树寻找果实。"]],
+    "nudibranch": ["约 20–40 厘米", "1–50 米", "印度洋与太平洋温暖海域", ["西班牙舞娘展开身体游泳时，动作很像舞动的红裙。", "它背上的羽状结构其实是用来呼吸的鳃。"]],
+    "whale-shark": ["最大约 18 米", "0–1,000 米", "全球热带与暖温带外海，常见于近岸富饵海域", ["鲸鲨有着宽宽扁扁的脑袋，嘴巴长在小眼睛的前面。", "它会张口过滤海水中的浮游生物、小鱼和鱼卵。"]],
+    "basking-shark": ["最大约 12 米", "0–1,200 米", "全球温带海域", ["巨大的嘴张开时，细密的鳃耙会筛住浮游生物。", "它会随季节迁徙，寻找食物丰富的水域。"]],
+    "great-white": ["最大约 6 米", "0–1,200 米", "全球温带与亚热带沿岸及外海", ["大白鲨的身体上深下浅，从不同方向看都更难被发现。", "它需要不断替换磨损或脱落的牙齿。"]],
+    "tiger-shark": ["最大约 5.5 米", "0–1,100 米", "全球热带与亚热带海域", ["虎鲨的牙齿边缘有锯齿，形状像弯曲的开瓶器。", "它经常在夜间靠近浅水区活动。"]],
+    "hammerhead": ["最大约 6 米", "0–1,000 米", "全球温暖沿岸与外海", ["双髻形头部能把感知电信号的器官分布得更开。", "有些双髻鲨会在白天聚成很大的群体。"]],
+    "nurse-shark": ["最大约 4.3 米", "1–130 米", "大西洋与东太平洋温暖浅海", ["它的嘴边有一对像胡须的触须，用来感知海底食物。", "白天常成群在洞穴或礁石下休息。"]],
+    "thresher-shark": ["含尾最大约 7.6 米", "0–700 米", "全球温带与热带外海", ["狐鲨会先用长尾击晕成群的小鱼，再回头取食。", "它有时会跃出水面，整个身体离开海水。"]],
+    "sawshark": ["约 1–1.7 米", "40–1,000 米", "印度洋、西太平洋与加勒比部分海域", ["锯状吻部两侧的“大齿”其实是特化的鳞片。", "锯鲨的鳃裂位于头部两侧，与锯鳐不同。"]],
+    "frilled-shark": ["约 1.5–2 米", "50–1,570 米", "全球零散分布的深海大陆坡", ["它保留了许多古老特征，但并不是从史前一直没有变化的“活化石”。", "嘴里排列着许多三叉形的小牙齿，可以抓牢滑溜的猎物。"]],
+    "goblin-shark": ["约 3–4 米", "40–1,300 米", "全球温带与热带深海", ["哥布林鲨的颌可以像弹簧一样迅速向前伸出。", "半透明的皮肤让它看起来呈粉红色。"]],
+    "blue-whale": ["最大约 30 米", "0–500 米", "除北冰洋外的全球大洋", ["蓝鲸的心脏大小接近一辆小汽车。", "进食时，它会吞入大量海水，再用鲸须滤出磷虾。"]],
+    "humpback-whale": ["约 12–16 米", "0–600 米", "全球各大洋", ["座头鲸的胸鳍可接近身体长度的三分之一。", "它会用气泡围成“网”，合作聚拢小鱼。"]],
+    "sperm-whale": ["最大约 18 米", "0–3,000 米", "全球深水海域", ["抹香鲸会发出非常响亮的点击声，用回声寻找猎物。", "深潜时，它能在水下停留一个多小时。"]],
+    "orca": ["约 6–9 米", "0–1,000 米", "全球各大洋，从极地到热带", ["虎鲸是体型最大的海豚。", "不同家族会学习并传承各自的捕食方法。"]],
+    "dunkleosteus": ["约 5–8 米", "深度未知", "古欧美大陆附近的泥盆纪海域", ["它没有真正的牙齿，而是用锋利的颌骨板切割食物。", "头胸部覆盖着厚重骨甲，身体后半部却较为灵活。"]],
+    "megalodon": ["估计约 15–20 米", "深度未知", "曾广布全球温暖海域", ["巨齿鲨的牙齿有些超过 15 厘米长。", "它和现代大白鲨不是同一种动物，也不是大白鲨的直接祖先。"]]
+  };
   const CARDS = [
     ...COMMON_ONE.map((item, index) => makeCard(item, "common", "assets/cards-common-1.jpg", index)),
     ...COMMON_TWO.map((item, index) => makeCard(item, "common", "assets/cards-common-2.jpg", index)),
@@ -75,7 +125,8 @@
   const CARD_MAP = Object.fromEntries(CARDS.map((card) => [card.id, card]));
 
   function makeCard(item, rarity, sheet, spriteIndex) {
-    return { id: item[0], name: item[1], category: item[2], description: `${item[1]}${item[3]}`, fact: item[4], era: item[5] || "现存物种", rarity, sheet, spriteIndex };
+    const detail = SPECIES_DETAILS[item[0]] || ["待观察", "待观察", "等待新的观察记录", []];
+    return { id: item[0], name: item[1], category: item[2], description: `${item[1]}${item[3]}`, facts: [detail[3][0], item[4], detail[3][1]].filter(Boolean), length: detail[0], depth: detail[1], regions: detail[2], era: item[5] || "现存物种", rarity, sheet, spriteIndex };
   }
 
   const defaultState = { settings: { childName: "小海", companions: {} }, records: {}, achievements: { collection: {}, pending: [], grants: {}, rareMisses: 0, recent: [], totalDraws: 0, migrated: true } };
@@ -240,6 +291,13 @@
   function distributionRowHtml(item) { const total = item.values.length, stack = total ? GRADES.map((g, i) => { const p = item.counts[g] / total * 100; return p ? `<span style="width:${p}%;background:${GRADE_COLORS[i]}"></span>` : ""; }).join("") : ""; return `<div class="distribution-row"><span class="distribution-label">${item.name}</span><div class="stack" aria-label="${item.name}共${total}条记录">${stack}</div></div>`; }
 
   function speciesArtHtml(card) { const col = card.spriteIndex % 4, row = Math.floor(card.spriteIndex / 4); return `<span class="species-art" style="--sprite:url('${card.sheet}');--sprite-x:${col * 33.333}%;--sprite-y:${row * 33.333}%"></span>`; }
+  function factsHtml(card) { return `<ul class="species-facts">${card.facts.map((fact) => `<li>${fact}</li>`).join("")}</ul>`; }
+  function speciesVitalsHtml(card, compact = false) {
+    return `<dl class="species-vitals${compact ? " is-compact" : ""}"><div><dt>体长</dt><dd>${card.length}</dd></div><div><dt>活动深度</dt><dd>${card.depth}</dd></div></dl>`;
+  }
+  function collectibleCardPagesHtml(card, subtitle) {
+    return `<div class="reveal-card-pages"><section class="reveal-image-page" aria-hidden="false"><span class="reveal-rarity">${card.rarity === "rare" ? "稀有 R" : "普通"}</span>${card.rarity === "rare" ? `<span class="tooth-badge"><i data-lucide="shield"></i></span>` : ""}${speciesArtHtml(card)}<div class="reveal-card-copy"><strong>${card.name}</strong><span>${subtitle}</span></div><button class="card-page-button" type="button" data-flip-reveal aria-label="查看${card.name}介绍" title="查看动物介绍"><i data-lucide="book-open"></i></button></section><section class="reveal-info-page" aria-hidden="true"><div class="info-page-head"><span>${card.category}</span><strong>${card.name}</strong></div>${speciesVitalsHtml(card, true)}<div class="info-regions"><i data-lucide="map-pin"></i><p><strong>常见海域</strong>${card.regions}</p></div><div class="info-facts"><strong>你知道吗</strong>${factsHtml(card)}</div><button class="card-page-button" type="button" data-flip-reveal tabindex="-1" aria-label="返回${card.name}图片" title="返回动物图片"><i data-lucide="image"></i></button></section></div>`;
+  }
   function entry(id) { return state.achievements.collection[id] || null; }
   function renderCollection() {
     const owned = CARDS.filter((card) => entry(card.id));
@@ -259,7 +317,7 @@
     const card = CARD_MAP[id], owned = entry(id); if (!card || !owned) return;
     const companions = SUBJECTS.filter((s) => state.settings.companions[s.key] === id).map((s) => s.name);
     $("#sheet").dataset.sheetMode = "card";
-    $("#sheet-content").innerHTML = `<div class="sheet-title-row"><h2>${card.name}</h2><button class="icon-button" type="button" data-close-sheet><i data-lucide="x"></i></button></div><div class="detail-hero is-${card.rarity}"><span class="detail-rarity">${card.rarity === "rare" ? `稀有 R · ${card.category}` : `普通 · ${card.category}`}</span>${speciesArtHtml(card)}</div><p class="species-description">${card.description}</p><section class="fact-block"><h3>你知道吗</h3><p>${card.fact}</p>${owned.count >= 2 ? `<p class="unlocked-fact">伙伴升级解锁了新的观察记录。</p>` : ""}</section><dl class="species-meta"><div><dt>${card.category === "史前生物" ? "生存年代" : "物种状态"}</dt><dd>${card.era}</dd></div><div><dt>首次发现</dt><dd>${formatShortDate(owned.firstFound)}</dd></div><div><dt>当前数量</dt><dd>×${owned.count}${owned.count === 3 ? " MAX" : ""}</dd></div></dl>${companions.length ? `<p class="companion-current"><i data-lucide="heart"></i>正在陪伴：${companions.join("、")}</p>` : ""}<button class="primary-button" type="button" data-choose-companion="${card.id}"><i data-lucide="smile"></i><span>设为科目伙伴</span></button>`;
+    $("#sheet-content").innerHTML = `<div class="detail-card-view is-${card.rarity}"><div class="detail-card-toolbar"><button class="icon-button" type="button" data-close-sheet aria-label="关闭"><i data-lucide="x"></i></button></div><article class="detail-collectible-card collectible-card-face">${collectibleCardPagesHtml(card, owned.count > 1 ? `×${owned.count}${owned.count === 3 ? " MAX" : ""}` : card.category)}</article><div class="detail-card-meta"><span>${formatShortDate(owned.firstFound)} 首次发现</span><strong>×${owned.count}${owned.count === 3 ? " MAX" : ""}</strong></div>${companions.length ? `<p class="companion-current"><i data-lucide="heart"></i>正在陪伴：${companions.join("、")}</p>` : ""}<button class="primary-button" type="button" data-choose-companion="${card.id}"><i data-lucide="smile"></i><span>设为科目伙伴</span></button></div>`;
     if (!$("#sheet").open) $("#sheet").showModal(); refreshIcons();
   }
   function openCompanionPicker(id) {
@@ -300,7 +358,7 @@
   }
   function renderReveal(card, count, repeated) {
     const pending = state.achievements.pending.length, title = card.rarity === "rare" ? `稀有发现：${card.name}` : repeated ? (count === 3 ? "伙伴满级" : "伙伴升级") : `发现了${card.name}`;
-    $("#discovery-content").innerHTML = `<div class="reveal-scene is-${card.rarity}"><div class="sonar-rings"><i></i><i></i><i></i></div><button class="icon-button reveal-close" type="button" data-close-discovery><i data-lucide="x"></i></button><div class="flip-card"><div class="flip-card-inner"><div class="flip-card-back"><span class="sonar-mark"><i data-lucide="waves"></i></span></div><article class="flip-card-front"><span class="reveal-rarity">${card.rarity === "rare" ? "稀有 R" : "普通"}</span>${card.rarity === "rare" ? `<span class="tooth-badge"><i data-lucide="shield"></i></span>` : ""}${speciesArtHtml(card)}<div class="reveal-card-copy"><strong>${card.name}</strong><span>${repeated ? `×${count}${count === 3 ? " MAX" : ""}` : card.category}</span></div></article></div></div><div class="reveal-copy"><h2>${title}</h2><p>${card.description}</p></div><div class="reveal-actions">${pending ? `<button class="primary-button" type="button" data-continue-discovery>继续发现（还剩 ${pending} 次）</button>` : `<button class="primary-button" type="button" data-finish-discovery>收进图鉴</button>`}<button class="secondary-button" type="button" data-choose-companion="${card.id}"><i data-lucide="heart"></i><span>设为科目伙伴</span></button></div></div>`;
+    $("#discovery-content").innerHTML = `<div class="reveal-scene is-${card.rarity}"><div class="sonar-rings"><i></i><i></i><i></i></div><button class="icon-button reveal-close" type="button" data-close-discovery><i data-lucide="x"></i></button><div class="flip-card"><div class="flip-card-inner"><div class="flip-card-back"><span class="sonar-mark"><i data-lucide="waves"></i></span></div><article class="flip-card-front collectible-card-face">${collectibleCardPagesHtml(card, repeated ? `×${count}${count === 3 ? " MAX" : ""}` : card.category)}</article></div></div><div class="reveal-copy"><h2>${title}</h2><p>${card.description}</p></div><div class="reveal-actions">${pending ? `<button class="primary-button" type="button" data-continue-discovery>继续发现（还剩 ${pending} 次）</button>` : `<button class="primary-button" type="button" data-finish-discovery>收进图鉴</button>`}<button class="secondary-button" type="button" data-choose-companion="${card.id}"><i data-lucide="heart"></i><span>设为科目伙伴</span></button></div></div>`;
     refreshIcons(); requestAnimationFrame(() => requestAnimationFrame(() => $(".reveal-scene").classList.add("is-revealed")));
   }
 
@@ -335,6 +393,7 @@
     if (event.target.closest("[data-open-discovery]")) return openDiscovery();
     const detail = event.target.closest("[data-card-detail]"); if (detail) return openCardDetail(detail.dataset.cardDetail);
     const draw = event.target.closest("[data-draw-pending]"); if (draw) return resolveDraw(draw.dataset.drawPending);
+    const revealFlip = event.target.closest("[data-flip-reveal]"); if (revealFlip) { const front = revealFlip.closest(".collectible-card-face"), showInfo = !front.classList.contains("is-showing-info"), imagePage = $(".reveal-image-page", front), infoPage = $(".reveal-info-page", front); front.classList.toggle("is-showing-info", showInfo); imagePage.setAttribute("aria-hidden", String(showInfo)); infoPage.setAttribute("aria-hidden", String(!showInfo)); $("[data-flip-reveal]", imagePage).tabIndex = showInfo ? -1 : 0; $("[data-flip-reveal]", infoPage).tabIndex = showInfo ? 0 : -1; return; }
     if (event.target.closest("[data-continue-discovery]")) return renderDiscoveryChoices();
     if (event.target.closest("[data-finish-discovery]")) { $("#discovery-dialog").close(); return switchView("collection"); }
     if (event.target.closest("[data-close-discovery]")) { $("#discovery-dialog").close(); if (activeView === "collection") renderCollection(); return; }

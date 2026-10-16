@@ -405,7 +405,7 @@ main { padding: 4px 18px calc(106px + env(safe-area-inset-bottom)); }
 .sheet-actions .secondary-button, .sheet-actions .primary-button { width: 100%; }
 .settings-actions { display: grid; gap: 10px; margin-top: 24px; }
 
-/* The two longest mobile sheets use a compact, non-scrolling portrait layout. */
+/* Record and collectible sheets use a compact, non-scrolling portrait layout. */
 .bottom-sheet[data-sheet-mode="record"],
 .bottom-sheet[data-sheet-mode="card"] {
   overflow-y: hidden;
@@ -426,16 +426,8 @@ main { padding: 4px 18px calc(106px + env(safe-area-inset-bottom)); }
 .bottom-sheet[data-sheet-mode="record"] .sheet-actions { margin-top: 8px; }
 .bottom-sheet[data-sheet-mode="record"] .sheet-actions > button { min-height: 44px; }
 
-.bottom-sheet[data-sheet-mode="card"] .detail-hero { height: clamp(180px, 27dvh, 230px); margin: 8px 0 10px; }
-.bottom-sheet[data-sheet-mode="card"] .species-description { margin: 0 0 8px; font-size: 14px; line-height: 1.55; }
-.bottom-sheet[data-sheet-mode="card"] .fact-block { padding: 8px 0; }
-.bottom-sheet[data-sheet-mode="card"] .fact-block h3 { margin-bottom: 3px; font-size: 15px; }
-.bottom-sheet[data-sheet-mode="card"] .fact-block p { font-size: 13px; line-height: 1.45; }
-.bottom-sheet[data-sheet-mode="card"] .fact-block .unlocked-fact { margin-top: 4px; font-size: 11px; }
-.bottom-sheet[data-sheet-mode="card"] .species-meta { gap: 5px; margin: 9px 0; }
-.bottom-sheet[data-sheet-mode="card"] .species-meta div { min-height: 20px; align-items: center; }
-.bottom-sheet[data-sheet-mode="card"] .companion-current { margin: 7px 0; }
-.bottom-sheet[data-sheet-mode="card"] > .sheet-handle + #sheet-content > .primary-button { min-height: 44px; }
+.bottom-sheet[data-sheet-mode="card"] { overflow-y: hidden; }
+.bottom-sheet[data-sheet-mode="card"] .sheet-handle { margin-bottom: 2px; }
 
 .settings-row { display: flex; width: 100%; min-height: 62px; align-items: center; justify-content: space-between; gap: 12px; margin-top: 18px; padding: 9px 4px; border: 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: transparent; text-align: left; cursor: pointer; }
 .settings-row span { display: grid; gap: 3px; }
@@ -485,7 +477,7 @@ main { padding: 4px 18px calc(106px + env(safe-area-inset-bottom)); }
   background-repeat: no-repeat;
 }
 .collection-card > .species-art { position: absolute; inset: 0; }
-.card-rarity, .reveal-rarity, .detail-rarity { position: absolute; z-index: 2; top: 9px; left: 9px; padding: 5px 9px; border-radius: 12px; color: #284b53; background: rgba(255,255,255,.9); font-size: 11px; font-weight: 850; }
+.card-rarity, .reveal-rarity { position: absolute; z-index: 2; top: 9px; left: 9px; padding: 5px 9px; border-radius: 12px; color: #284b53; background: rgba(255,255,255,.9); font-size: 11px; font-weight: 850; }
 .is-rare > .card-rarity, .is-rare .reveal-rarity { color: #fff0b1; background: #173e56; border: 1px solid #d4b34e; }
 .tooth-badge { position: absolute; z-index: 3; top: 7px; right: 7px; display: grid; width: 30px; height: 30px; place-items: center; border: 1px solid #e6cf7a; border-radius: 50%; color: #f5d86a; background: #173e56; }
 .tooth-badge svg { width: 16px; }
@@ -496,21 +488,22 @@ main { padding: 4px 18px calc(106px + env(safe-area-inset-bottom)); }
 .companion-mark { position: absolute; z-index: 4; right: 8px; bottom: 9px; display: grid; width: 25px; height: 25px; place-items: center; border-radius: 50%; color: #fff; background: var(--chinese); }
 .companion-mark svg { width: 13px; fill: currentColor; }
 
-/* Card detail and companion picker */
-.detail-hero { position: relative; height: 300px; margin: 12px 0 16px; overflow: hidden; border: 1px solid var(--line); border-radius: 8px; background: #dff3f2; }
-.detail-hero.is-rare { border: 3px double #d4b34e; background: #153f58; }
-.detail-hero .species-art { height: 100%; }
-.detail-rarity { position: absolute; }
-.detail-hero.is-rare .detail-rarity { color: #fff0b1; border: 1px solid #d4b34e; background: #173e56; }
-.species-description { margin: 0 0 14px; font-size: 15px; font-weight: 650; line-height: 1.75; }
-.fact-block { padding: 14px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-.fact-block h3 { margin: 0 0 6px; font-size: 16px; }
-.fact-block p { margin: 0; color: #456168; font-size: 14px; line-height: 1.65; }
-.fact-block .unlocked-fact { margin-top: 8px; color: var(--primary); font-weight: 750; }
-.species-meta { display: grid; gap: 9px; margin: 16px 0; }
-.species-meta div { display: flex; justify-content: space-between; gap: 12px; }
-.species-meta dt { color: var(--muted); font-size: 12px; font-weight: 700; }
-.species-meta dd { margin: 0; font-size: 13px; font-weight: 800; text-align: right; }
+/* Collectible card detail and companion picker */
+.species-vitals { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; margin: 0 0 10px; overflow: hidden; border-radius: 8px; background: #c9dfdb; }
+.species-vitals div { display: grid; min-width: 0; gap: 3px; padding: 9px 11px; background: #e8f4f1; }
+.species-vitals dt { color: #54716d; font-size: 11px; font-weight: 750; }
+.species-vitals dd { margin: 0; color: var(--ink); font-size: 14px; font-weight: 850; font-variant-numeric: tabular-nums; }
+.species-facts { display: grid; gap: 7px; margin: 0; padding-left: 19px; color: #456168; font-size: 13px; line-height: 1.55; }
+.species-facts li::marker { color: var(--primary); }
+.detail-card-view { --detail-card-width: min(74vw, 300px, calc((100dvh - 210px) * .75)); display: grid; justify-items: center; gap: 9px; }
+.detail-card-view.is-rare { color: #fff; }
+.detail-card-toolbar { display: flex; width: var(--detail-card-width); height: 44px; align-items: center; justify-content: flex-end; }
+.detail-collectible-card { position: relative; width: var(--detail-card-width); aspect-ratio: 3 / 4; overflow: hidden; border: 2px solid #c8dfda; border-radius: 16px; background: #fff; box-shadow: 0 12px 28px rgba(23,51,58,.18); perspective: 1200px; }
+.detail-card-view.is-rare .detail-collectible-card { border: 5px double #e0c15b; background: #123e57; box-shadow: 0 16px 34px rgba(9,47,69,.3); }
+.detail-card-meta { display: flex; width: var(--detail-card-width); min-height: 24px; align-items: center; justify-content: space-between; gap: 10px; color: var(--muted); font-size: 11px; font-weight: 750; }
+.detail-card-meta strong { color: var(--ink); font-size: 13px; font-variant-numeric: tabular-nums; }
+.detail-card-view > .primary-button { width: var(--detail-card-width); min-height: 44px; }
+.detail-card-view .companion-current { width: var(--detail-card-width); margin: 0; }
 .companion-current { display: flex; align-items: center; gap: 7px; color: var(--chinese); font-size: 13px; font-weight: 800; }
 .companion-current svg { width: 16px; fill: currentColor; }
 .companion-picker { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 8px; }
@@ -552,15 +545,52 @@ main { padding: 4px 18px calc(106px + env(safe-area-inset-bottom)); }
 .reveal-scene { position: relative; display: grid; min-height: 100dvh; align-content: center; justify-items: center; padding: calc(58px + env(safe-area-inset-top)) 22px calc(24px + env(safe-area-inset-bottom)); overflow: hidden; background: #d9f0ed; color: var(--ink); }
 .reveal-scene.is-rare { color: #fff; background: #092f45; }
 .reveal-close { position: absolute; z-index: 6; top: calc(12px + env(safe-area-inset-top)); right: 12px; }
-.flip-card { position: relative; z-index: 2; width: min(72vw,300px); aspect-ratio: 3 / 4; perspective: 1200px; }
+.flip-card { position: relative; z-index: 2; width: min(74vw,300px,calc((100dvh - 260px) * .75)); aspect-ratio: 3 / 4; perspective: 1200px; }
 .flip-card-inner { position: absolute; inset: 0; transform-style: preserve-3d; transition: transform 760ms cubic-bezier(.16,1,.3,1); }
 .is-revealed .flip-card-inner { transform: rotateY(180deg); }
 .flip-card-back, .flip-card-front { position: absolute; inset: 0; overflow: hidden; border-radius: 16px; backface-visibility: hidden; }
 .flip-card-back { display: grid; place-items: center; color: #e9fbf8; background: #176878; border: 2px solid #bce0df; }
 .flip-card-front { transform: rotateY(180deg); border: 2px solid #c8dfda; background: #fff; }
 .is-rare .flip-card-front { border: 5px double #e0c15b; background: #123e57; box-shadow: 0 16px 42px rgba(0,0,0,.28); }
-.flip-card-front > .species-art { position: absolute; inset: 0; }
+.reveal-card-pages { position: absolute; inset: 0; transform-style: preserve-3d; transition: transform 520ms cubic-bezier(.16,1,.3,1); }
+.collectible-card-face.is-showing-info .reveal-card-pages { transform: rotateY(180deg); }
+.reveal-image-page, .reveal-info-page { position: absolute; inset: 0; overflow: hidden; backface-visibility: hidden; }
+.reveal-image-page { pointer-events: auto; }
+.reveal-info-page { pointer-events: none; }
+.collectible-card-face.is-showing-info .reveal-image-page { pointer-events: none; }
+.collectible-card-face.is-showing-info .reveal-info-page { pointer-events: auto; }
+.reveal-image-page > .species-art { position: absolute; inset: 0; }
+.reveal-info-page { display: grid; grid-template-rows: auto auto auto minmax(0, 1fr); gap: 10px; padding: 18px 16px 15px; transform: rotateY(180deg); color: var(--ink); background: #f6fbf8; }
+.is-rare .reveal-info-page { color: #fff; background: #103b50; }
+.info-page-head { display: grid; gap: 2px; padding-right: 42px; }
+.info-page-head span { color: #5b7775; font-size: 10px; font-weight: 800; }
+.info-page-head strong { font-size: clamp(19px,5vw,24px); line-height: 1.1; }
+.is-rare .info-page-head span { color: #d2e5e8; }
+.reveal-info-page .species-vitals { margin: 0; }
+.reveal-info-page .species-vitals div { padding: 7px 9px; }
+.reveal-info-page .species-vitals dd { font-size: 12px; }
+.is-rare .reveal-info-page .species-vitals { background: #477381; }
+.is-rare .reveal-info-page .species-vitals div { background: #194d60; }
+.is-rare .reveal-info-page .species-vitals dt { color: #bbd4d8; }
+.is-rare .reveal-info-page .species-vitals dd { color: #fff; }
+.info-regions { display: grid; grid-template-columns: 17px 1fr; gap: 7px; align-items: start; }
+.info-regions svg { width: 16px; margin-top: 2px; color: var(--primary); }
+.is-rare .info-regions svg { color: #f4c95d; }
+.info-regions p { display: grid; gap: 1px; margin: 0; color: #4c686b; font-size: 11px; line-height: 1.4; }
+.info-regions strong { color: var(--ink); font-size: 10px; }
+.is-rare .info-regions p { color: #d2e5e8; }
+.is-rare .info-regions strong { color: #fff; }
+.info-facts { min-height: 0; overflow-y: auto; padding-right: 4px; scrollbar-width: thin; }
+.info-facts > strong { display: block; margin-bottom: 4px; font-size: 11px; }
+.info-facts .species-facts { gap: 4px; padding-left: 16px; color: #3f5c61; font-size: 11px; line-height: 1.42; }
+.is-rare .info-facts .species-facts { color: #e0edef; }
+.is-rare .info-facts .species-facts li::marker { color: #f4c95d; }
+.card-page-button { position: absolute; z-index: 5; right: 11px; bottom: 11px; display: grid; width: 44px; height: 44px; place-items: center; padding: 0; border: 1px solid rgba(20,123,115,.25); border-radius: 50%; color: var(--primary); background: rgba(255,255,255,.94); box-shadow: 0 5px 16px rgba(13,58,62,.18); cursor: pointer; }
+.card-page-button svg { width: 20px; }
+.reveal-info-page .card-page-button { top: 12px; right: 12px; bottom: auto; }
+.is-rare .card-page-button { color: #f4d46f; border-color: rgba(244,201,93,.55); background: #153f58; }
 .reveal-card-copy { position: absolute; z-index: 3; right: 0; bottom: 0; left: 0; display: grid; gap: 3px; padding: 50px 16px 16px; background: linear-gradient(transparent, rgba(255,255,255,.97) 52%); }
+.reveal-card-copy { padding-right: 66px; }
 .is-rare .reveal-card-copy { background: linear-gradient(transparent, rgba(4,30,47,.96) 52%); }
 .reveal-card-copy strong { font-size: 24px; }
 .reveal-card-copy span { color: var(--muted); font-size: 12px; font-weight: 750; }
@@ -598,6 +628,7 @@ main { padding: 4px 18px calc(106px + env(safe-area-inset-bottom)); }
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
   .flip-card-inner { transition: opacity 180ms ease !important; }
   .is-revealed .flip-card-inner { transform: rotateY(180deg); }
+  .reveal-card-pages { transition: opacity 180ms ease !important; }
   .sonar-rings { display: none; }
 }
 
@@ -619,8 +650,8 @@ main { padding: 4px 18px calc(106px + env(safe-area-inset-bottom)); }
   .bottom-sheet[data-sheet-mode="record"] .grade-picker button { height: 38px; }
   .bottom-sheet[data-sheet-mode="record"] .grade-picker .no-homework-option { height: 32px; }
   .bottom-sheet[data-sheet-mode="record"] .sheet-actions { margin-top: 4px; }
-  .bottom-sheet[data-sheet-mode="card"] .detail-hero { height: 165px; }
-  .bottom-sheet[data-sheet-mode="card"] .species-description { font-size: 13px; }
+  .detail-card-view { --detail-card-width: min(70vw, 255px, calc((100dvh - 190px) * .75)); gap: 6px; }
+  .detail-card-toolbar { height: 40px; }
 }
 
 @media (max-height: 620px), (orientation: landscape) {
