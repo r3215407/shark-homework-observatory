@@ -491,8 +491,11 @@ main { padding: 4px 18px calc(106px + env(safe-area-inset-bottom)); }
 /* Collectible card detail and companion picker */
 .species-vitals { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; margin: 0 0 10px; overflow: hidden; border-radius: 8px; background: #c9dfdb; }
 .species-vitals div { display: grid; min-width: 0; gap: 3px; padding: 9px 11px; background: #e8f4f1; }
-.species-vitals dt { color: #54716d; font-size: 11px; font-weight: 750; }
+.species-vitals dt { display: flex; align-items: center; justify-content: space-between; gap: 5px; color: #54716d; font-size: 11px; font-weight: 750; }
 .species-vitals dd { margin: 0; color: var(--ink); font-size: 14px; font-weight: 850; font-variant-numeric: tabular-nums; }
+.metric-rank { display: inline-flex; min-height: 19px; align-items: baseline; gap: 1px; padding: 2px 6px; border-radius: 9px; color: #0f625d; background: rgba(255,255,255,.72); font-size: 10px; font-weight: 850; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.metric-rank small { font-size: 8px; }
+.metric-rank.is-unranked { color: #607a77; font-size: 8px; }
 .species-facts { display: grid; gap: 7px; margin: 0; padding-left: 19px; color: #456168; font-size: 13px; line-height: 1.55; }
 .species-facts li::marker { color: var(--primary); }
 .detail-card-view { --detail-card-width: min(74vw, 300px, calc((100dvh - 210px) * .75)); display: grid; justify-items: center; gap: 9px; }
@@ -560,29 +563,33 @@ main { padding: 4px 18px calc(106px + env(safe-area-inset-bottom)); }
 .collectible-card-face.is-showing-info .reveal-image-page { pointer-events: none; }
 .collectible-card-face.is-showing-info .reveal-info-page { pointer-events: auto; }
 .reveal-image-page > .species-art { position: absolute; inset: 0; }
-.reveal-info-page { display: grid; grid-template-rows: auto auto auto minmax(0, 1fr); gap: 10px; padding: 18px 16px 15px; transform: rotateY(180deg); color: var(--ink); background: #f6fbf8; }
+.reveal-info-page { display: grid; grid-template-rows: auto auto auto auto minmax(0, 1fr); gap: 11px; padding: 18px 16px 15px; transform: rotateY(180deg); color: var(--ink); background: #f6fbf8; }
 .is-rare .reveal-info-page { color: #fff; background: #103b50; }
 .info-page-head { display: grid; gap: 2px; padding-right: 42px; }
-.info-page-head span { color: #5b7775; font-size: 10px; font-weight: 800; }
-.info-page-head strong { font-size: clamp(19px,5vw,24px); line-height: 1.1; }
+.info-page-head span { color: #5b7775; font-size: 11px; font-weight: 800; }
+.info-page-head strong { font-size: clamp(21px,5.5vw,26px); line-height: 1.1; }
 .is-rare .info-page-head span { color: #d2e5e8; }
 .reveal-info-page .species-vitals { margin: 0; }
-.reveal-info-page .species-vitals div { padding: 7px 9px; }
-.reveal-info-page .species-vitals dd { font-size: 12px; }
+.reveal-info-page .species-vitals div { gap: 5px; padding: 8px 9px; }
+.reveal-info-page .species-vitals dd { font-size: 13px; }
 .is-rare .reveal-info-page .species-vitals { background: #477381; }
 .is-rare .reveal-info-page .species-vitals div { background: #194d60; }
 .is-rare .reveal-info-page .species-vitals dt { color: #bbd4d8; }
 .is-rare .reveal-info-page .species-vitals dd { color: #fff; }
+.is-rare .metric-rank { color: #fff0b1; background: rgba(7,39,54,.55); }
+.is-rare .metric-rank.is-unranked { color: #c2d8dc; }
 .info-regions { display: grid; grid-template-columns: 17px 1fr; gap: 7px; align-items: start; }
 .info-regions svg { width: 16px; margin-top: 2px; color: var(--primary); }
 .is-rare .info-regions svg { color: #f4c95d; }
-.info-regions p { display: grid; gap: 1px; margin: 0; color: #4c686b; font-size: 11px; line-height: 1.4; }
-.info-regions strong { color: var(--ink); font-size: 10px; }
+.info-regions p { display: grid; gap: 2px; margin: 0; color: #4c686b; font-size: 12px; line-height: 1.4; }
+.info-regions strong { color: var(--ink); font-size: 11px; }
 .is-rare .info-regions p { color: #d2e5e8; }
 .is-rare .info-regions strong { color: #fff; }
+.info-summary { margin: 0; color: #34565b; font-size: 12px; font-weight: 700; line-height: 1.5; }
+.is-rare .info-summary { color: #edf6f7; }
 .info-facts { min-height: 0; overflow-y: auto; padding-right: 4px; scrollbar-width: thin; }
-.info-facts > strong { display: block; margin-bottom: 4px; font-size: 11px; }
-.info-facts .species-facts { gap: 4px; padding-left: 16px; color: #3f5c61; font-size: 11px; line-height: 1.42; }
+.info-facts > strong { display: block; margin-bottom: 6px; font-size: 12px; }
+.info-facts .species-facts { gap: 6px; padding-left: 17px; color: #3f5c61; font-size: 12px; line-height: 1.48; }
 .is-rare .info-facts .species-facts { color: #e0edef; }
 .is-rare .info-facts .species-facts li::marker { color: #f4c95d; }
 .card-page-button { position: absolute; z-index: 5; right: 11px; bottom: 11px; display: grid; width: 44px; height: 44px; place-items: center; padding: 0; border: 1px solid rgba(20,123,115,.25); border-radius: 50%; color: var(--primary); background: rgba(255,255,255,.94); box-shadow: 0 5px 16px rgba(13,58,62,.18); cursor: pointer; }

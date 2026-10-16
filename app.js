@@ -123,10 +123,33 @@
     ...RARE.map((item, index) => makeCard(item, "rare", "assets/cards-rare.jpg", index))
   ];
   const CARD_MAP = Object.fromEntries(CARDS.map((card) => [card.id, card]));
+  addSpeciesRankings();
 
   function makeCard(item, rarity, sheet, spriteIndex) {
     const detail = SPECIES_DETAILS[item[0]] || ["待观察", "待观察", "等待新的观察记录", []];
     return { id: item[0], name: item[1], category: item[2], description: `${item[1]}${item[3]}`, facts: [detail[3][0], item[4], detail[3][1]].filter(Boolean), length: detail[0], depth: detail[1], regions: detail[2], era: item[5] || "现存物种", rarity, sheet, spriteIndex };
+  }
+
+  function metricInMeters(value) {
+    if (!value || /未知|陆地|待观察/.test(value)) return null;
+    const numbers = value.replace(/,/g, "").match(/\d+(?:\.\d+)?/g);
+    if (!numbers) return null;
+    const maximum = Math.max(...numbers.map(Number));
+    return /厘米/.test(value) ? maximum / 100 : maximum;
+  }
+
+  function addSpeciesRankings() {
+    const assign = (field, rankField) => {
+      const ranked = CARDS.map((card) => ({ card, value: metricInMeters(card[field]) }))
+        .filter((item) => item.value !== null)
+        .sort((a, b) => b.value - a.value);
+      ranked.forEach((item, index) => {
+        const firstWithValue = ranked.findIndex((candidate) => candidate.value === item.value);
+        item.card[rankField] = { rank: firstWithValue + 1, total: CARDS.length };
+      });
+    };
+    assign("length", "lengthRank");
+    assign("depth", "depthRank");
   }
 
   const defaultState = { settings: { childName: "小海", companions: {} }, records: {}, achievements: { collection: {}, pending: [], grants: {}, rareMisses: 0, recent: [], totalDraws: 0, migrated: true } };
@@ -293,10 +316,11 @@
   function speciesArtHtml(card) { const col = card.spriteIndex % 4, row = Math.floor(card.spriteIndex / 4); return `<span class="species-art" style="--sprite:url('${card.sheet}');--sprite-x:${col * 33.333}%;--sprite-y:${row * 33.333}%"></span>`; }
   function factsHtml(card) { return `<ul class="species-facts">${card.facts.map((fact) => `<li>${fact}</li>`).join("")}</ul>`; }
   function speciesVitalsHtml(card, compact = false) {
-    return `<dl class="species-vitals${compact ? " is-compact" : ""}"><div><dt>体长</dt><dd>${card.length}</dd></div><div><dt>活动深度</dt><dd>${card.depth}</dd></div></dl>`;
+    const rank = (value, label) => value ? `<span class="metric-rank" aria-label="${label}排名第${value.rank}，共${value.total}种">第 ${value.rank}<small>/${value.total}</small></span>` : `<span class="metric-rank is-unranked">暂无排名</span>`;
+    return `<dl class="species-vitals${compact ? " is-compact" : ""}"><div><dt><span>体长</span>${rank(card.lengthRank, "体长")}</dt><dd>${card.length}</dd></div><div><dt><span>活动深度</span>${rank(card.depthRank, "活动深度")}</dt><dd>${card.depth}</dd></div></dl>`;
   }
   function collectibleCardPagesHtml(card, subtitle) {
-    return `<div class="reveal-card-pages"><section class="reveal-image-page" aria-hidden="false"><span class="reveal-rarity">${card.rarity === "rare" ? "稀有 R" : "普通"}</span>${card.rarity === "rare" ? `<span class="tooth-badge"><i data-lucide="shield"></i></span>` : ""}${speciesArtHtml(card)}<div class="reveal-card-copy"><strong>${card.name}</strong><span>${subtitle}</span></div><button class="card-page-button" type="button" data-flip-reveal aria-label="查看${card.name}介绍" title="查看动物介绍"><i data-lucide="book-open"></i></button></section><section class="reveal-info-page" aria-hidden="true"><div class="info-page-head"><span>${card.category}</span><strong>${card.name}</strong></div>${speciesVitalsHtml(card, true)}<div class="info-regions"><i data-lucide="map-pin"></i><p><strong>常见海域</strong>${card.regions}</p></div><div class="info-facts"><strong>你知道吗</strong>${factsHtml(card)}</div><button class="card-page-button" type="button" data-flip-reveal tabindex="-1" aria-label="返回${card.name}图片" title="返回动物图片"><i data-lucide="image"></i></button></section></div>`;
+    return `<div class="reveal-card-pages"><section class="reveal-image-page" aria-hidden="false"><span class="reveal-rarity">${card.rarity === "rare" ? "稀有 R" : "普通"}</span>${card.rarity === "rare" ? `<span class="tooth-badge"><i data-lucide="shield"></i></span>` : ""}${speciesArtHtml(card)}<div class="reveal-card-copy"><strong>${card.name}</strong><span>${subtitle}</span></div><button class="card-page-button" type="button" data-flip-reveal aria-label="查看${card.name}介绍" title="查看动物介绍"><i data-lucide="book-open"></i></button></section><section class="reveal-info-page" aria-hidden="true"><div class="info-page-head"><span>${card.category}</span><strong>${card.name}</strong></div>${speciesVitalsHtml(card, true)}<div class="info-regions"><i data-lucide="map-pin"></i><p><strong>常见海域</strong>${card.regions}</p></div><p class="info-summary">${card.description}</p><div class="info-facts"><strong>你知道吗</strong>${factsHtml(card)}</div><button class="card-page-button" type="button" data-flip-reveal tabindex="-1" aria-label="返回${card.name}图片" title="返回动物图片"><i data-lucide="image"></i></button></section></div>`;
   }
   function entry(id) { return state.achievements.collection[id] || null; }
   function renderCollection() {
