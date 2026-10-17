@@ -320,7 +320,7 @@
     return `<dl class="species-vitals${compact ? " is-compact" : ""}"><div><dt><span>体长</span>${rank(card.lengthRank, "体长")}</dt><dd>${card.length}</dd></div><div><dt><span>活动深度</span>${rank(card.depthRank, "活动深度")}</dt><dd>${card.depth}</dd></div></dl>`;
   }
   function collectibleCardPagesHtml(card, subtitle) {
-    return `<div class="reveal-card-pages"><section class="reveal-image-page" aria-hidden="false"><span class="reveal-rarity">${card.rarity === "rare" ? "稀有 R" : "普通"}</span>${card.rarity === "rare" ? `<span class="tooth-badge"><i data-lucide="shield"></i></span>` : ""}${speciesArtHtml(card)}<div class="reveal-card-copy"><strong>${card.name}</strong><span>${subtitle}</span></div><button class="card-page-button" type="button" data-flip-reveal aria-label="查看${card.name}介绍" title="查看动物介绍"><i data-lucide="book-open"></i></button></section><section class="reveal-info-page" aria-hidden="true"><div class="info-page-head"><span>${card.category}</span><strong>${card.name}</strong></div>${speciesVitalsHtml(card, true)}<div class="info-regions"><i data-lucide="map-pin"></i><p><strong>常见海域</strong>${card.regions}</p></div><p class="info-summary">${card.description}</p><div class="info-facts"><strong>你知道吗</strong>${factsHtml(card)}</div><button class="card-page-button" type="button" data-flip-reveal tabindex="-1" aria-label="返回${card.name}图片" title="返回动物图片"><i data-lucide="image"></i></button></section></div>`;
+    return `<div class="reveal-card-pages"><section class="reveal-image-page" aria-hidden="false"><span class="reveal-rarity">${card.rarity === "rare" ? "稀有 R" : "普通"}</span>${card.rarity === "rare" ? `<span class="tooth-badge"><i data-lucide="shield"></i></span>` : ""}${speciesArtHtml(card)}<div class="reveal-card-copy"><strong>${card.name}</strong><span>${subtitle}</span></div><span class="card-flip-hint" aria-hidden="true"><i data-lucide="rotate-3d"></i></span></section><section class="reveal-info-page" aria-hidden="true"><div class="info-page-head"><span>${card.category}</span><strong>${card.name}</strong></div>${speciesVitalsHtml(card, true)}<div class="info-regions"><i data-lucide="map-pin"></i><p><strong>常见海域</strong>${card.regions}</p></div><p class="info-summary">${card.description}</p><div class="info-facts"><strong>你知道吗</strong>${factsHtml(card)}</div><span class="card-flip-hint is-info" aria-hidden="true"><i data-lucide="rotate-3d"></i></span></section></div>`;
   }
   function entry(id) { return state.achievements.collection[id] || null; }
   function renderCollection() {
@@ -339,9 +339,13 @@
   }
   function openCardDetail(id) {
     const card = CARD_MAP[id], owned = entry(id); if (!card || !owned) return;
-    const companions = SUBJECTS.filter((s) => state.settings.companions[s.key] === id).map((s) => s.name);
+    const isCompanion = Object.values(state.settings.companions).includes(id);
+    const ownedCards = CARDS.filter((item) => entry(item.id));
+    const currentIndex = ownedCards.findIndex((item) => item.id === id);
+    const previousCard = ownedCards[(currentIndex - 1 + ownedCards.length) % ownedCards.length];
+    const nextCard = ownedCards[(currentIndex + 1) % ownedCards.length];
     $("#sheet").dataset.sheetMode = "card";
-    $("#sheet-content").innerHTML = `<div class="detail-card-view is-${card.rarity}"><div class="detail-card-toolbar"><button class="icon-button" type="button" data-close-sheet aria-label="关闭"><i data-lucide="x"></i></button></div><article class="detail-collectible-card collectible-card-face">${collectibleCardPagesHtml(card, owned.count > 1 ? `×${owned.count}${owned.count === 3 ? " MAX" : ""}` : card.category)}</article><div class="detail-card-meta"><span>${formatShortDate(owned.firstFound)} 首次发现</span><strong>×${owned.count}${owned.count === 3 ? " MAX" : ""}</strong></div>${companions.length ? `<p class="companion-current"><i data-lucide="heart"></i>正在陪伴：${companions.join("、")}</p>` : ""}<button class="primary-button" type="button" data-choose-companion="${card.id}"><i data-lucide="smile"></i><span>设为科目伙伴</span></button></div>`;
+    $("#sheet-content").innerHTML = `<div class="detail-card-view is-${card.rarity}"><div class="detail-card-stage"><article class="detail-collectible-card collectible-card-face" data-flip-card tabindex="0" role="button" aria-label="${card.name}卡片，点击翻面" aria-pressed="false">${collectibleCardPagesHtml(card, owned.count > 1 ? `×${owned.count}${owned.count === 3 ? " MAX" : ""}` : card.category)}</article><button class="icon-button detail-close-button" type="button" data-close-sheet aria-label="关闭卡片" title="关闭"><i data-lucide="x"></i></button><div class="card-action-cluster" aria-label="卡片操作"><button class="card-action-button" type="button" data-switch-card="${previousCard.id}" aria-label="上一张，${previousCard.name}" title="上一张"><i data-lucide="chevron-left"></i></button><button class="card-action-button" type="button" data-switch-card="${nextCard.id}" aria-label="下一张，${nextCard.name}" title="下一张"><i data-lucide="chevron-right"></i></button><button class="card-action-button companion-action${isCompanion ? " is-selected" : ""}" type="button" data-choose-companion="${card.id}" aria-label="设为科目伙伴" title="设为科目伙伴"><i data-lucide="heart"></i></button></div></div></div>`;
     if (!$("#sheet").open) $("#sheet").showModal(); refreshIcons();
   }
   function openCompanionPicker(id) {
@@ -417,7 +421,8 @@
     if (event.target.closest("[data-open-discovery]")) return openDiscovery();
     const detail = event.target.closest("[data-card-detail]"); if (detail) return openCardDetail(detail.dataset.cardDetail);
     const draw = event.target.closest("[data-draw-pending]"); if (draw) return resolveDraw(draw.dataset.drawPending);
-    const revealFlip = event.target.closest("[data-flip-reveal]"); if (revealFlip) { const front = revealFlip.closest(".collectible-card-face"), showInfo = !front.classList.contains("is-showing-info"), imagePage = $(".reveal-image-page", front), infoPage = $(".reveal-info-page", front); front.classList.toggle("is-showing-info", showInfo); imagePage.setAttribute("aria-hidden", String(showInfo)); infoPage.setAttribute("aria-hidden", String(!showInfo)); $("[data-flip-reveal]", imagePage).tabIndex = showInfo ? -1 : 0; $("[data-flip-reveal]", infoPage).tabIndex = showInfo ? 0 : -1; return; }
+    const cardSwitch = event.target.closest("[data-switch-card]"); if (cardSwitch) return openCardDetail(cardSwitch.dataset.switchCard);
+    const revealFlip = event.target.closest("[data-flip-card]"); if (revealFlip) { toggleCardFace(revealFlip); return; }
     if (event.target.closest("[data-continue-discovery]")) return renderDiscoveryChoices();
     if (event.target.closest("[data-finish-discovery]")) { $("#discovery-dialog").close(); return switchView("collection"); }
     if (event.target.closest("[data-close-discovery]")) { $("#discovery-dialog").close(); if (activeView === "collection") renderCollection(); return; }
@@ -430,6 +435,21 @@
     if (event.target.closest("[data-save-settings]")) { const name = $("#child-name").value.trim(); if (!name) return showToast("请输入孩子昵称"); state.settings.childName = name; if (saveState("设置已保存")) { $("#sheet").close(); switchView(activeView); } return; }
     if (event.target.closest("[data-clear-all]")) { if (confirm("确定清空全部成绩、图鉴和科目伙伴？此操作无法撤销。")) { state = clone(defaultState); saveState("全部本地数据已清空"); initTodayDraft(); $("#sheet").close(); switchView("today"); renderToday(); } return; }
     if (event.target.closest("[data-go-today]")) switchView("today");
+  });
+
+  function toggleCardFace(cardFace) {
+    const showInfo = !cardFace.classList.contains("is-showing-info");
+    const imagePage = $(".reveal-image-page", cardFace), infoPage = $(".reveal-info-page", cardFace);
+    cardFace.classList.toggle("is-showing-info", showInfo);
+    cardFace.setAttribute("aria-pressed", String(showInfo));
+    cardFace.setAttribute("aria-label", `${$(".info-page-head strong", cardFace).textContent}卡片，${showInfo ? "当前为介绍面，点击返回图片" : "当前为图片面，点击查看介绍"}`);
+    imagePage.setAttribute("aria-hidden", String(showInfo));
+    infoPage.setAttribute("aria-hidden", String(!showInfo));
+  }
+
+  document.addEventListener("keydown", (event) => {
+    const cardFace = event.target.closest("[data-flip-card]");
+    if (cardFace && (event.key === "Enter" || event.key === " ")) { event.preventDefault(); toggleCardFace(cardFace); }
   });
 
   $("#sheet").addEventListener("click", (event) => { if (event.target === $("#sheet")) $("#sheet").close(); });
