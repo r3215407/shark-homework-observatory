@@ -426,7 +426,8 @@ main { padding: 4px 18px calc(106px + env(safe-area-inset-bottom)); }
 .bottom-sheet[data-sheet-mode="record"] .sheet-actions { margin-top: 8px; }
 .bottom-sheet[data-sheet-mode="record"] .sheet-actions > button { min-height: 44px; }
 
-.bottom-sheet[data-sheet-mode="card"] { padding: 6px; overflow-y: hidden; background: transparent; box-shadow: none; }
+.bottom-sheet[data-sheet-mode="card"] { padding: 6px; overflow-x: hidden; overflow-y: auto; background: transparent; box-shadow: none; scrollbar-width: none; overscroll-behavior: contain; }
+.bottom-sheet[data-sheet-mode="card"]::-webkit-scrollbar { display: none; }
 .bottom-sheet[data-sheet-mode="card"] .sheet-handle { position: absolute; z-index: 12; top: 12px; left: 50%; margin: 0; transform: translateX(-50%); background: rgba(255,255,255,.8); }
 
 .settings-row { display: flex; width: 100%; min-height: 62px; align-items: center; justify-content: space-between; gap: 12px; margin-top: 18px; padding: 9px 4px; border: 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: transparent; text-align: left; cursor: pointer; }
@@ -498,12 +499,13 @@ main { padding: 4px 18px calc(106px + env(safe-area-inset-bottom)); }
 .metric-rank.is-unranked { color: #607a77; font-size: 8px; }
 .species-facts { display: grid; gap: 7px; margin: 0; padding-left: 19px; color: #456168; font-size: 13px; line-height: 1.55; }
 .species-facts li::marker { color: var(--primary); }
-.detail-card-view { --detail-card-width: min(calc(100vw - 30px), 430px, calc((100dvh - 28px) * .75)); display: grid; justify-items: center; }
+.detail-card-view { --detail-card-width: min(calc(100vw - 30px), 430px); display: grid; justify-items: center; }
 .detail-card-view.is-rare { color: #fff; }
 .detail-card-stage { position: relative; width: var(--detail-card-width); }
-.detail-collectible-card { position: relative; width: var(--detail-card-width); aspect-ratio: 3 / 4; overflow: hidden; border: 2px solid #c8dfda; border-radius: 16px; background: #fff; box-shadow: 0 12px 28px rgba(23,51,58,.18); perspective: 1200px; cursor: pointer; }
+.detail-collectible-card { position: relative; width: var(--detail-card-width); height: clamp(600px, 150vw, 688px); overflow: hidden; border: 2px solid #c8dfda; border-radius: 16px; background: #fff; box-shadow: 0 12px 28px rgba(23,51,58,.18); perspective: 1200px; cursor: pointer; }
 .detail-collectible-card:focus-visible { outline: 3px solid var(--shell); outline-offset: 3px; }
 .detail-card-view.is-rare .detail-collectible-card { border: 5px double #e0c15b; background: #123e57; box-shadow: 0 16px 34px rgba(9,47,69,.3); }
+.detail-card-view .tooth-badge { display: none; }
 .detail-close-button { position: absolute; z-index: 9; top: 16px; right: 16px; border: 1px solid rgba(20,123,115,.28); background: rgba(255,255,255,.94); box-shadow: 0 6px 18px rgba(13,58,62,.2); }
 .detail-card-view.is-rare .detail-close-button { color: #f4d46f; border-color: rgba(244,201,93,.55); background: rgba(21,63,88,.94); }
 .card-action-cluster { position: absolute; z-index: 9; right: 16px; bottom: 16px; display: flex; gap: 8px; }
@@ -515,8 +517,8 @@ main { padding: 4px 18px calc(106px + env(safe-area-inset-bottom)); }
 .detail-card-view.is-rare .card-action-button { color: #f4d46f; border-color: rgba(244,201,93,.55); background: rgba(21,63,88,.94); }
 .detail-card-view .card-flip-hint { display: none; }
 .detail-card-view .reveal-card-copy { padding-right: 168px; padding-bottom: 22px; }
-.detail-card-view .info-facts { padding-bottom: 54px; }
-.detail-card-view .reveal-info-page { gap: 14px; padding: 24px 24px 20px; }
+.detail-card-view .info-facts { overflow: visible; padding: 0 0 62px; scrollbar-width: none; }
+.detail-card-view .reveal-info-page { grid-template-rows: auto auto auto auto auto; gap: 14px; padding: 24px 24px 20px; }
 .detail-card-view .info-page-head span { font-size: 15px; }
 .detail-card-view .info-page-head strong { font-size: clamp(30px, 8vw, 36px); }
 .detail-card-view .reveal-info-page .species-vitals div { padding: 12px; }
@@ -681,10 +683,9 @@ main { padding: 4px 18px calc(106px + env(safe-area-inset-bottom)); }
   .bottom-sheet[data-sheet-mode="record"] .grade-picker button { height: 38px; }
   .bottom-sheet[data-sheet-mode="record"] .grade-picker .no-homework-option { height: 32px; }
   .bottom-sheet[data-sheet-mode="record"] .sheet-actions { margin-top: 4px; }
-  .detail-card-view { --detail-card-width: min(calc(100vw - 30px), 430px, calc((100dvh - 24px) * .75)); }
+  .detail-card-view { --detail-card-width: min(calc(100vw - 30px), 430px); }
 }
 
 @media (max-height: 620px), (orientation: landscape) {
-  .bottom-sheet[data-sheet-mode="record"],
-  .bottom-sheet[data-sheet-mode="card"] { overflow-y: auto; }
+  .bottom-sheet[data-sheet-mode="record"] { overflow-y: auto; }
 }
