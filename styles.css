@@ -426,8 +426,9 @@ main { padding: 4px 18px calc(106px + env(safe-area-inset-bottom)); }
 .bottom-sheet[data-sheet-mode="record"] .sheet-actions { margin-top: 8px; }
 .bottom-sheet[data-sheet-mode="record"] .sheet-actions > button { min-height: 44px; }
 
-.bottom-sheet[data-sheet-mode="card"] { padding: 6px; overflow-x: hidden; overflow-y: auto; background: transparent; box-shadow: none; scrollbar-width: none; overscroll-behavior: contain; }
+.bottom-sheet[data-sheet-mode="card"] { inset: 0; width: min(100%, 480px); height: 100dvh; max-height: 100dvh; margin: 0 auto; padding: max(6px, env(safe-area-inset-top)) 6px max(6px, env(safe-area-inset-bottom)); overflow-x: hidden; overflow-y: auto; border-radius: 0; background: transparent; box-shadow: none; scrollbar-width: none; overscroll-behavior: contain; }
 .bottom-sheet[data-sheet-mode="card"]::-webkit-scrollbar { display: none; }
+.bottom-sheet[data-sheet-mode="card"] #sheet-content { width: 100%; }
 .bottom-sheet[data-sheet-mode="card"] .sheet-handle { position: absolute; z-index: 12; top: 12px; left: 50%; margin: 0; transform: translateX(-50%); background: rgba(255,255,255,.8); }
 
 .settings-row { display: flex; width: 100%; min-height: 62px; align-items: center; justify-content: space-between; gap: 12px; margin-top: 18px; padding: 9px 4px; border: 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: transparent; text-align: left; cursor: pointer; }
@@ -459,7 +460,7 @@ main { padding: 4px 18px calc(106px + env(safe-area-inset-bottom)); }
 .collection-filters button.is-selected { color: #fff; background: var(--primary); }
 .collection-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px; }
 .collection-card { position: relative; display: block; min-width: 0; aspect-ratio: 3 / 4; overflow: hidden; padding: 0; border: 1px solid #cddfdb; border-radius: 8px; background: #dff3f2; text-align: left; cursor: pointer; }
-.collection-card.is-rare { border: 3px double #d4b34e; background: #153f58; }
+.collection-card.is-rare { border: 2px solid #d4b34e; background: #153f58; }
 .collection-card.is-locked { color: #fff; background: #315e65; cursor: default; }
 .collection-card.is-locked > .species-art { inset: -8px; width: calc(100% + 16px); height: calc(100% + 16px); transform: scale(1.06); filter: blur(6px) grayscale(.58) saturate(.72) brightness(.78); }
 .locked-card-copy { position: absolute; z-index: 2; inset: 0; display: grid; place-items: center; align-content: center; gap: 12px; background: rgba(17, 58, 64, .28); }
@@ -499,12 +500,12 @@ main { padding: 4px 18px calc(106px + env(safe-area-inset-bottom)); }
 .metric-rank.is-unranked { color: #607a77; font-size: 8px; }
 .species-facts { display: grid; gap: 7px; margin: 0; padding-left: 19px; color: #456168; font-size: 13px; line-height: 1.55; }
 .species-facts li::marker { color: var(--primary); }
-.detail-card-view { --detail-card-width: min(calc(100vw - 30px), 430px); display: grid; justify-items: center; }
+.detail-card-view { display: grid; width: min(100%, 430px); margin: 0 auto; justify-items: center; }
 .detail-card-view.is-rare { color: #fff; }
-.detail-card-stage { position: relative; width: var(--detail-card-width); }
-.detail-collectible-card { position: relative; width: var(--detail-card-width); height: clamp(600px, 150vw, 688px); overflow: hidden; border: 2px solid #c8dfda; border-radius: 16px; background: #fff; box-shadow: 0 12px 28px rgba(23,51,58,.18); perspective: 1200px; cursor: pointer; }
+.detail-card-stage { position: relative; width: 100%; }
+.detail-collectible-card { position: relative; width: 100%; height: clamp(600px, 150vw, 688px); overflow: hidden; border: 2px solid #c8dfda; border-radius: 16px; background: #fff; box-shadow: 0 12px 28px rgba(23,51,58,.18); perspective: 1200px; cursor: pointer; }
 .detail-collectible-card:focus-visible { outline: 3px solid var(--shell); outline-offset: 3px; }
-.detail-card-view.is-rare .detail-collectible-card { border: 5px double #e0c15b; background: #123e57; box-shadow: 0 16px 34px rgba(9,47,69,.3); }
+.detail-card-view.is-rare .detail-collectible-card { border: 2px solid #e0c15b; background: #123e57; box-shadow: 0 16px 34px rgba(9,47,69,.3); }
 .detail-card-view .tooth-badge { display: none; }
 .detail-close-button { position: absolute; z-index: 9; top: 16px; right: 16px; border: 1px solid rgba(20,123,115,.28); background: rgba(255,255,255,.94); box-shadow: 0 6px 18px rgba(13,58,62,.2); }
 .detail-card-view.is-rare .detail-close-button { color: #f4d46f; border-color: rgba(244,201,93,.55); background: rgba(21,63,88,.94); }
@@ -516,6 +517,7 @@ main { padding: 4px 18px calc(106px + env(safe-area-inset-bottom)); }
 .card-action-button.companion-action.is-selected svg { fill: currentColor; }
 .detail-card-view.is-rare .card-action-button { color: #f4d46f; border-color: rgba(244,201,93,.55); background: rgba(21,63,88,.94); }
 .detail-card-view .card-flip-hint { display: none; }
+.detail-card-view .species-art { background-size: 400% 400%; }
 .detail-card-view .reveal-card-copy { padding-right: 168px; padding-bottom: 22px; }
 .detail-card-view .info-facts { overflow: visible; padding: 0 0 62px; scrollbar-width: none; }
 .detail-card-view .reveal-info-page { grid-template-rows: auto auto auto auto auto; gap: 14px; padding: 24px 24px 20px; }
@@ -580,7 +582,7 @@ main { padding: 4px 18px calc(106px + env(safe-area-inset-bottom)); }
 .flip-card-back, .flip-card-front { position: absolute; inset: 0; overflow: hidden; border-radius: 16px; backface-visibility: hidden; }
 .flip-card-back { display: grid; place-items: center; color: #e9fbf8; background: #176878; border: 2px solid #bce0df; }
 .flip-card-front { transform: rotateY(180deg); border: 2px solid #c8dfda; background: #fff; }
-.is-rare .flip-card-front { border: 5px double #e0c15b; background: #123e57; box-shadow: 0 16px 42px rgba(0,0,0,.28); }
+.is-rare .flip-card-front { border: 2px solid #e0c15b; background: #123e57; box-shadow: 0 16px 42px rgba(0,0,0,.28); }
 .reveal-card-pages { position: absolute; inset: 0; transform-style: preserve-3d; transition: transform 520ms cubic-bezier(.16,1,.3,1); }
 .collectible-card-face.is-showing-info .reveal-card-pages { transform: rotateY(180deg); }
 .reveal-image-page, .reveal-info-page { position: absolute; inset: 0; overflow: hidden; backface-visibility: hidden; }
@@ -683,7 +685,6 @@ main { padding: 4px 18px calc(106px + env(safe-area-inset-bottom)); }
   .bottom-sheet[data-sheet-mode="record"] .grade-picker button { height: 38px; }
   .bottom-sheet[data-sheet-mode="record"] .grade-picker .no-homework-option { height: 32px; }
   .bottom-sheet[data-sheet-mode="record"] .sheet-actions { margin-top: 4px; }
-  .detail-card-view { --detail-card-width: min(calc(100vw - 30px), 430px); }
 }
 
 @media (max-height: 620px), (orientation: landscape) {
