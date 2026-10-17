@@ -316,7 +316,7 @@
   function speciesArtHtml(card) { const col = card.spriteIndex % 4, row = Math.floor(card.spriteIndex / 4); return `<span class="species-art" style="--sprite:url('${card.sheet}');--sprite-x:${col * 33.333}%;--sprite-y:${row * 33.333}%"></span>`; }
   function factsHtml(card) { return `<ul class="species-facts">${card.facts.map((fact) => `<li>${fact}</li>`).join("")}</ul>`; }
   function speciesVitalsHtml(card, compact = false) {
-    const rank = (value, label) => value ? `<span class="metric-rank" aria-label="${label}排名第${value.rank}，共${value.total}种">第 ${value.rank}<small>/${value.total}</small></span>` : `<span class="metric-rank is-unranked">暂无排名</span>`;
+    const rank = (value, label) => value ? `<span class="metric-rank" aria-label="${label}排名第${value.rank}">第 ${value.rank}</span>` : `<span class="metric-rank is-unranked">暂无排名</span>`;
     return `<dl class="species-vitals${compact ? " is-compact" : ""}"><div><dt><span>体长</span>${rank(card.lengthRank, "体长")}</dt><dd>${card.length}</dd></div><div><dt><span>活动深度</span>${rank(card.depthRank, "活动深度")}</dt><dd>${card.depth}</dd></div></dl>`;
   }
   function collectibleCardPagesHtml(card, subtitle) {
