@@ -307,7 +307,15 @@
   function trendChartSvg(dates) {
     const width = 360, height = 220, left = 34, right = 12, top = 12, bottom = 30, plotW = width - left - right, plotH = height - top - bottom;
     const x = (i) => left + (dates.length === 1 ? plotW / 2 : i * plotW / (dates.length - 1)), y = (g) => top + GRADES.indexOf(g) * plotH / (GRADES.length - 1);
-    const lines = SUBJECTS.map((s) => { const segments = []; let current = []; dates.forEach((key, i) => { const grade = state.records[key] && state.records[key][s.key]; if (GRADES.includes(grade)) current.push([x(i), y(grade), grade]); else if (current.length) { segments.push(current); current = []; } }); if (current.length) segments.push(current); return segments.map((seg) => `<polyline class="chart-line" stroke="${SUBJECT_COLORS[s.key]}" points="${seg.map((p) => `${p[0]},${p[1]}`).join(" ")}"/>`).join("") + segments.flat().map((p) => `<circle class="chart-point" fill="${SUBJECT_COLORS[s.key]}" cx="${p[0]}" cy="${p[1]}" r="4"><title>${s.name} ${p[2]}</title></circle>`).join(""); }).join("");
+    const lines = SUBJECTS.map((s) => {
+      const points = [];
+      dates.forEach((key, i) => {
+        const grade = state.records[key] && state.records[key][s.key];
+        if (GRADES.includes(grade)) points.push([x(i), y(grade), grade]);
+      });
+      const line = points.length > 1 ? `<polyline class="chart-line" stroke="${SUBJECT_COLORS[s.key]}" points="${points.map((p) => `${p[0]},${p[1]}`).join(" ")}"/>` : "";
+      return line + points.map((p) => `<circle class="chart-point" fill="${SUBJECT_COLORS[s.key]}" cx="${p[0]}" cy="${p[1]}" r="4"><title>${s.name} ${p[2]}</title></circle>`).join("");
+    }).join("");
     const labels = dates.length <= 7 ? dates.map((_, i) => i) : [0, Math.floor((dates.length - 1) / 2), dates.length - 1];
     return `<svg class="trend-chart" viewBox="0 0 ${width} ${height}" role="img">${GRADES.map((g) => { const gy = y(g); return `<line class="chart-grid" x1="${left}" x2="${width - right}" y1="${gy}" y2="${gy}"/><text class="chart-axis-label" x="2" y="${gy + 4}">${g}</text>`; }).join("")}${labels.map((i) => { const d = parseDateKey(dates[i]); return `<text class="chart-axis-label" text-anchor="middle" x="${x(i)}" y="${height - 8}">${d.getMonth() + 1}/${d.getDate()}</text>`; }).join("")}${lines}</svg>`;
   }
